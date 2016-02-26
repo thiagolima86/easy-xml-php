@@ -26,7 +26,6 @@ class Easy_xml{
 	* @return void
 	*/
 	public function name($key){
-		
 		$pos = strpos($key, " ");
 		if($pos!=""){
 			$name = substr($key, 0, $pos);
@@ -67,7 +66,7 @@ class Easy_xml{
 		/** Remove valores entre %% exemplo <Foto%2%> vai ficar <foto>
 		Isso resolve problema com arrays com mesmo nome;
 		*/
-		$key = preg_replace("(\%[a-zA-Z0-9_/-]\%)",'', $key);
+		$key = preg_replace("(\%[[:alnum:]]+\%)",'', $key);
 
 		$pos = strpos($key, " ");
 		if($pos!=""){
