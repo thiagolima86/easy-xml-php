@@ -14,7 +14,7 @@ class Easy_xml{
 	* @return void Grava o valor na variavel global header
 	*/
 
-	public function header($charset="UTF8", $version="1.0"){
+	public function header($charset="UTF-8", $version="1.0"){
 		$this->header = "<?xml version=\"{$version}\" encoding=\"{$charset}\"?>";
 		return $this;
 	}
