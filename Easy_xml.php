@@ -2,6 +2,7 @@
 
 class Easy_xml{
 	
+	public $charset;
 	public $header;
 	public $open_name;
 	public $close_name;
@@ -15,6 +16,7 @@ class Easy_xml{
 	*/
 
 	public function header($charset="UTF-8", $version="1.0"){
+		$this->charset = $charset;
 		$this->header = "<?xml version=\"{$version}\" encoding=\"{$charset}\"?>";
 		return $this;
 	}
@@ -68,6 +70,7 @@ class Easy_xml{
 		*/
 		$key = preg_replace("(\%[[:alnum:]]+\%)",'', $key);
 
+
 		$pos = strpos($key, " ");
 		if($pos!=""){
 			$name = substr($key, 0, $pos);
@@ -104,6 +107,11 @@ class Easy_xml{
 	* @return string
 	*/
 	private function get_node($key, $content=""){
+
+		/** Remove valores entre %% exemplo <Foto%2%> vai ficar <foto>
+		Isso resolve problema com arrays com mesmo nome;
+		*/
+		$key = preg_replace("(\%[[:alnum:]]+\%)",'', $key);
 
 		$pos = strpos($key, " ");
 		if($pos!=""){
@@ -173,6 +181,7 @@ private function formatXmlString($xml) {
 	* @return String
 	*/
 	public function generate(){
+		header("Content-Type: text/xml; charset={$this->charset}",true);
 		$xml = $this->header;
 		$xml .= $this->open_name;
 		$xml .= $this->node;
@@ -183,6 +192,7 @@ private function formatXmlString($xml) {
 		unset($this->open_name);
 		unset($this->node);
 		unset($this->close_name);
+		unset($this->charset);
 		return $this->formatXmlString($xml);
 	}
 
