@@ -35,23 +35,22 @@ $xml = new easy_xml();
 * @param string $key Nome do nó
 * @param array $content array com conteúdo
 * Uso : `$xml->lot_node_child("Nome", array("Nome" => "foto1.jpg", "Largura" => "100px", "Altura" => "150px"));`
-* saída : `<Nome>foto1.jpg</Nome>`
-* `<Largura>100px</Largura>`
-* `<Altura>150px</Altura>`
+* saída : 
+* ```<Nome>foto1.jpg</Nome>
+<Largura>100px</Largura>
+<Altura>150px</Altura>```
 
 ### Gerar Xml
-Para gerar o xml voce deve usar o método ->generate()
-
-```$xml->generate()```
+Para gerar o xml voce deve usar o método ->generate() ```$xml->generate()```
 
 Obs.:
 Existe uma dificuldade em colocar nós com o mesmo nome, quando se usa esse método, porque o a chave do array não pode ser duplicada. se você atribuir o mesmo nome ao array o php substituirá pelo último array. por isso foi criado um recurso para burlar esse problema. Basta colocar dentro da chave do array um valor unico entre porcentage %valor%. 
 
-Ex: `$array["foto%1%"] = "foto1.jpg";  $array["foto%2%"] = "foto2.jpg";` 
+Ex: ```$array["foto%1%"] = "foto1.jpg";  $array["foto%2%"] = "foto2.jpg";```
 
 * retorno:
 
-```<foto>foto1.jpg</foto>
+* ```<foto>foto1.jpg</foto>
 <foto>foto2.jpg</foto>```
 
 * Note que o valor entre %% é escapado. Isso resolve o problema
