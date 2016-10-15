@@ -26,34 +26,33 @@ $xml = new EasyXml();
 * @param string $key Node name
 * @param string $content Node content
 * Use : `$xml->node("Name", "pictures1.jpg");`
-* Return : `<Name>foto1.jpg</Name>`
+* Return : ```<Name>foto1.jpg</Name>```
 
 ###lot_node_child
-* `lot_node_child($key, $content)`
+* ```lot_node_child($key, $content)```
 * @param string $key Node name
 * @param array $content Content array with all nodes
-* Use : `$xml->lot_node_child("Name", array("Name" => "picture1.jpg", "Width" => "100px", "Height" => "150px"));`
+* Use : ```$xml->lot_node_child("Name", array("Name" => "picture1.jpg", "Width" => "100px", "Height" => "150px"));```
 * Return : ```<Name>picture1.jpg</Name>
-* <Width>100px</Width>
-* <Height>150px</Height>```
+<Width>100px</Width>
+<Height>150px</Height>```
+
 
 ### Render
-To Render you use ->generate() method
-
-```$xml->generate()```
+To Render you use ->generate() method ```$xml->generate()```
 
 Note.:
 There is a difficulty in putting us with the same name, when using this method because the matrix keys can not be duplicated. if you assign the same name to php array replace the last matrix. so it created a feature to work around this problem. Just put in the key array of a single value between percentage %value%.
 
 * Ex: 
 
-```$array["picture%1%"] = "picture1.jpg";
+* ```$array["picture%1%"] = "picture1.jpg";
 $array["picture%2%"] = "picture2.jpg";
 $array["picture%3%"] = "picture3.jpg";``` 
 
 * return:
 
-```<picture>picture1.jpg</picture>
+* ```<picture>picture1.jpg</picture>
 <picture>picture2.jpg</picture>
 <picture>picture3.jpg</picture>```
 
