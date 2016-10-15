@@ -37,19 +37,19 @@ $xml = new EasyXml();
 * Return : ```<Name>picture1.jpg</Name>
 * <Width>100px</Width>
 * <Height>150px</Height>```
->
->Note.:
+
+Note.:
 There is a difficulty in putting us with the same name, when using this method because the matrix keys can not be duplicated. if you assign the same name to php array replace the last matrix. so it created a feature to work around this problem. Just put in the key array of a single value between percentage %value%.
->Ex: 
-> ```$array["picture%1%"] = "picture1.jpg";
-> $array["picture%2%"] = "picture2.jpg";
-> $array["picture%3%"] = "picture3.jpg";``` 
->return:
-> ```<picture>foto1.jpg</picture>
-> <picture>foto2.jpg</picture>
-> <picture>foto3.jpg</picture>```
->
-> See that has a numeric value between %% percentage, that scape. This solve the problema. 
+Ex: 
+```$array["picture%1%"] = "picture1.jpg";
+$array["picture%2%"] = "picture2.jpg";
+$array["picture%3%"] = "picture3.jpg";``` 
+return:
+```<picture>foto1.jpg</picture>
+<picture>foto2.jpg</picture>
+<picture>foto3.jpg</picture>```
+
+See that has a numeric value between %% percentage, that scape. This solve the problema. 
 
 
 
