@@ -1,6 +1,20 @@
 <?php
+namespace EasyXmlPhp;
 
-class Easy_xml{
+ /**
+  * Easy Xml PHP is a library 
+  * That help you to converter array in xml code. 
+  * You can create only one node or a lot of
+  *
+  * @package  Easy XML 
+  * @author  Thiago Lima <thiagolima86@gmail.com>
+  * @version 1.2
+  * @category Library
+  * @url https://github.com/thiagolima86/easy-xml-php
+  */
+
+class EasyXml
+{
 	
 	public $charset;
 	public $header;
@@ -9,29 +23,30 @@ class Easy_xml{
 	public $node;
 
 	/** 
-	* Configura o cabeçalho do xml
-	* @param string $charset Define a codificação do xml
-	* @param string $version Define a versão do xml
-	* @return void Grava o valor na variavel global header
+	* Set xml header
+	* @param string $charset Define xml charset
+	* @param string $version Define xml version
+	* @return void Save value in global variable header 
 	*/
 
-	public function header($charset="UTF-8", $version="1.0"){
+	public function header($charset="UTF-8", $version="1.0")
+    {
 		$this->charset = $charset;
 		$this->header = "<?xml version=\"{$version}\" encoding=\"{$charset}\"?>";
 		return $this;
 	}
 
 	/** 
-	* Configura o nome do documento xml <Nomes> ...{corpo xml} ... </Nomes>
-	* @param string $key Define o nome do documento
-	* @param array $attr Define os atributos do nó
+	* Set document xml name <Names> ...{body} ... </Names>
+	* @param string $key Define document name
 	* @return void
 	*/
-	public function name($key){
+	public function name($key)
+    {
 		$pos = strpos($key, " ");
-		if($pos!=""){
+		if ($pos != "") {
 			$name = substr($key, 0, $pos);
-		}else{
+		} else {
 			$name=$key;
 		}
 		$this->open_name = "<{$key}". @$attr_string. ">";
@@ -40,30 +55,33 @@ class Easy_xml{
 	}
 
 	/** 
-	* Configurar os nós
-	* @param string $key Define o nome do nó
-	* @param array $attr Define os atributos do nó
+	* Set nodes
+	* @param string $key Define node name
+	* @param string $content Define content node
 	* @return void
 	*/
-	public function node($key, $content=""){
+	public function node($key, $content="")
+    {
 	
 		$this->node .= $this->get_node($key, $content);
 		return $this;
 	}
 
 	/** 
-	* Configurar os nós em lote
-	* @param string $key Define o nome do nó
-	* @param array $attr Define os atributos do nó
+	* Set a lot of nodes
+	* @param string $key Define node name
+	* @param array $content Define content node array
 	* @return void
 	*/
-	public function lot_node_child($key, $content=array()){
+	public function lot_node_child($key, $content=array())
+    {
 
 		$this->node .= $this->get_lot_node_child($key, $content);
 		return $this;		
 	}
 
-	public function get_lot_node_child($key, $content=array(), $indice=1){
+	public function get_lot_node_child($key, $content=array(), $indice=1)
+    {
 
 		/** Remove valores entre %% exemplo <Foto%2%> vai ficar <foto>
 		Isso resolve problema com arrays com mesmo nome;
@@ -72,25 +90,24 @@ class Easy_xml{
 
 
 		$pos = strpos($key, " ");
-		if($pos!=""){
+		if ($pos != "") {
 			$name = substr($key, 0, $pos);
-		}else{
+		} else {
 			$name=$key;
 		}
 
 		$tab = "";
-		for($i=0; $i<=$indice; $i++){
+		for ($i=0; $i<=$indice; $i++) {
 			$tab .= "";
 		}
 
 		$node = $tab."<{$key}". @$attr_string. ">";
 		foreach ($content as $key2 => $value) {
-			if(is_array($value)){
+			if (is_array($value)) {
 				$node .= $tab.$this->get_lot_node_child($key2, $value, $indice++);
-			}else{
+			} else {
 				$node .= $tab.$this->get_node($key2, $value, $indice++);
 			}
-
 		}
 		$node .= $tab."</{$name}>";
 		return $node;
@@ -101,41 +118,47 @@ class Easy_xml{
 
 
 	/** 
-	* Configurar os nós
-	* @param string $key Define o nome do nó
-	* @param array $attr Define os atributos do nó
+	* Set nodes
+	* @param string $key Define node name
+	* @param string $content Define node attributes
 	* @return string
 	*/
-	private function get_node($key, $content=""){
+	private function get_node($key, $content="")
+    {
 
-		/** Remove valores entre %% exemplo <Foto%2%> vai ficar <foto>
-		Isso resolve problema com arrays com mesmo nome;
+		/** 
+        * Remove valores entre %% exemplo <Foto%2%> vai ficar <Foto>
+		* Isso resolve problema com arrays com mesmo nome;
+        *
+        * Remove values between %% <pictures%1%>. It will transform in <picture>
+        * This solves the array problem that has same name.
 		*/
 		$key = preg_replace("(\%[[:alnum:]]+\%)",'', $key);
 
 		$pos = strpos($key, " ");
-		if($pos!=""){
+		if ($pos!="") {
 			$name = substr($key, 0, $pos);
-		}else{
+		} else {
 			$name=$key;
 		}
 		
 		$node = "";
-		if($content == ""){
+		if ($content == "") {
 			$node .= "<{$name} />";
-		}else{
+		} else {
 			$node .= "<{$key}". @$attr_string. ">{$content}</{$name}>";
 		}
 		return $node;		
 	}
 
 
-/** 
-	* Faz a identação do xml
+    /** 
+	* it does xml ident
 	* @param string $xml
-	* @return string
+	* @return string return string formated
 	*/
-private function formatXmlString($xml) {
+private function formatXmlString($xml)
+{
 
   // add marker linefeeds to aid the pretty-tokeniser (adds a linefeed between all tag-end boundaries)
   $xml = preg_replace('/(>)(<)(\/*)/', "$1\n$2$3", $xml);
@@ -177,25 +200,24 @@ private function formatXmlString($xml) {
 
 
 	/** 
-	* Gera o xml
-	* @return String
+	* Xml Generator
+	* @return String return xml formated
 	*/
-	public function generate(){
+	public function generate()
+    {
 		header("Content-Type: text/xml; charset={$this->charset}",true);
+        
 		$xml = $this->header;
 		$xml .= $this->open_name;
 		$xml .= $this->node;
 		$xml .= $this->close_name;
-
 
 		unset($this->header);
 		unset($this->open_name);
 		unset($this->node);
 		unset($this->close_name);
 		unset($this->charset);
+        
 		return $this->formatXmlString($xml);
 	}
-
-
-
 }

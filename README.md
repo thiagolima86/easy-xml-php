@@ -1,52 +1,55 @@
 # easy-xml-php
-Gera xml de forma simples. usando array.
+XML Generate easily using array.
 
-###Instalação
+##How Install
 
-><code><?php</code>
+```<?php
+require "easy-xml-php";
+$xml = new EasyXml();
+```
 
-><code>require "easy-xml-php";</code>
-
-><code>$xml = new easy_xml();</code>
-
-###Métodos
-####header
+##Methods
+###header
 * `header($charset, $version)`
 * @param string $charset default:UTF8
 * @param string $version default:1.0
-* Uso : `$xml->header();`
-* saída : `<?xml version="1.0" encoding="UTF8" ?>`
+* Use : `$xml->header();`
+* Return : `<?xml version="1.0" encoding="UTF8" ?>`
 
-####name
+###name
 * `name($key)`
-* @param string $key Nome do xml
-* Uso : `$xml->name("Imagens");`
-* saída : `<Imagens>...Corpo do xml...</Imagens>`
+* @param string $key xml name
+* Use : `$xml->name("Images");`
+* Return : `<Images>...body...</Images>`
 
-####node
+###node
 * `node($key, $content)`
-* @param string $key Nome do nó
-* @param string $content conteúdo do nó
-* Uso : `$xml->node("Nome", "foto1.jpg");`
-* saída : `<Nome>foto1.jpg</Nome>`
+* @param string $key Node name
+* @param string $content Node content
+* Use : `$xml->node("Name", "pictures1.jpg");`
+* Return : `<Name>foto1.jpg</Name>`
 
-####lot_node_child
+###lot_node_child
 * `lot_node_child($key, $content)`
-* @param string $key Nome do nó
-* @param array $content array com conteúdo
-* Uso : `$xml->lot_node_child("Nome", array("Nome" => "foto1.jpg", "Largura" => "100px", "Altura" => "150px"));`
-* saída : `<Nome>foto1.jpg</Nome>`
-* `<Largura>100px</Largura>`
-* `<Altura>150px</Altura>`
+* @param string $key Node name
+* @param array $content Content array with all nodes
+* Use : `$xml->lot_node_child("Name", array("Name" => "picture1.jpg", "Width" => "100px", "Height" => "150px"));`
+* Return : ```<Name>picture1.jpg</Name>
+* <Width>100px</Width>
+* <Height>150px</Height>```
 >
->Obs.:
-Existe uma dificuldade em colocar nós com o mesmo nome, quando se usa esse método, porque o a chave do array não pode ser duplicada. se você atribuir o mesmo nome ao array o php substituirá pelo último array. por isso foi criado um recurso para burlar esse problema. Basta colocar dentro da chave do array um valor unico entre percente %valor%. 
->Ex: $array["foto%1%"] = "foto1.jpg";  $array["foto%2%"] = "foto2.jpg"; 
->retorno:
-> `<foto>foto1.jpg</foto>`
-> `<foto>foto2.jpg</foto>`
+>Note.:
+There is a difficulty in putting us with the same name, when using this method because the matrix keys can not be duplicated. if you assign the same name to php array replace the last matrix. so it created a feature to work around this problem. Just put in the key array of a single value between percentage %value%.
+>Ex: 
+> ```$array["picture%1%"] = "picture1.jpg";
+> $array["picture%2%"] = "picture2.jpg";
+> $array["picture%3%"] = "picture3.jpg";``` 
+>return:
+> ```<picture>foto1.jpg</picture>
+> <picture>foto2.jpg</picture>
+> <picture>foto3.jpg</picture>```
 >
->Note que o valor entre %% é escapado. Isso resolve o problema
+> See that has a numeric value between %% percentage, that scape. This solve the problema. 
 
 
 
